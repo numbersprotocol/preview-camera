@@ -34,11 +34,11 @@ npx cap sync
 * [`saveFileToUserDevice(...)`](#savefiletouserdevice)
 * [`checkPermissions()`](#checkpermissions)
 * [`requestPermissions()`](#requestpermissions)
-* [`addListener('captureSuccessResult', ...)`](#addlistenercapturesuccessresult)
-* [`addListener('captureErrorResult', ...)`](#addlistenercaptureerrorresult)
-* [`addListener('captureVideoFinished', ...)`](#addlistenercapturevideofinished)
-* [`addListener('capturePhotoFinished', ...)`](#addlistenercapturephotofinished)
-* [`addListener('accelerometerOrientation', ...)`](#addlisteneraccelerometerorientation)
+* [`addListener('captureSuccessResult', ...)`](#addlistenercapturesuccessresult-)
+* [`addListener('captureErrorResult', ...)`](#addlistenercaptureerrorresult-)
+* [`addListener('captureVideoFinished', ...)`](#addlistenercapturevideofinished-)
+* [`addListener('capturePhotoFinished', ...)`](#addlistenercapturephotofinished-)
+* [`addListener('accelerometerOrientation', ...)`](#addlisteneraccelerometerorientation-)
 * [`removeAllListeners()`](#removealllisteners)
 * [Interfaces](#interfaces)
 * [Type Aliases](#type-aliases)
@@ -280,7 +280,7 @@ requestPermissions() => Promise<PermissionStatus>
 ### addListener('captureSuccessResult', ...)
 
 ```typescript
-addListener(eventName: 'captureSuccessResult', listenerFunc: (data: CaptureSuccessResult) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'captureSuccessResult', listenerFunc: (data: CaptureSuccessResult) => void) => Promise<PluginListenerHandle>
 ```
 
 | Param              | Type                                                                                     |
@@ -288,7 +288,7 @@ addListener(eventName: 'captureSuccessResult', listenerFunc: (data: CaptureSucce
 | **`eventName`**    | <code>'captureSuccessResult'</code>                                                      |
 | **`listenerFunc`** | <code>(data: <a href="#capturesuccessresult">CaptureSuccessResult</a>) =&gt; void</code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 --------------------
 
@@ -296,7 +296,7 @@ addListener(eventName: 'captureSuccessResult', listenerFunc: (data: CaptureSucce
 ### addListener('captureErrorResult', ...)
 
 ```typescript
-addListener(eventName: 'captureErrorResult', listenerFunc: (data: CaptureErrorResult) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'captureErrorResult', listenerFunc: (data: CaptureErrorResult) => void) => Promise<PluginListenerHandle>
 ```
 
 | Param              | Type                                                                                 |
@@ -304,7 +304,7 @@ addListener(eventName: 'captureErrorResult', listenerFunc: (data: CaptureErrorRe
 | **`eventName`**    | <code>'captureErrorResult'</code>                                                    |
 | **`listenerFunc`** | <code>(data: <a href="#captureerrorresult">CaptureErrorResult</a>) =&gt; void</code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 --------------------
 
@@ -312,7 +312,7 @@ addListener(eventName: 'captureErrorResult', listenerFunc: (data: CaptureErrorRe
 ### addListener('captureVideoFinished', ...)
 
 ```typescript
-addListener(eventName: 'captureVideoFinished', listenerFunc: (data: CaptureResult) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'captureVideoFinished', listenerFunc: (data: CaptureResult) => void) => Promise<PluginListenerHandle>
 ```
 
 | Param              | Type                                                                       |
@@ -320,7 +320,7 @@ addListener(eventName: 'captureVideoFinished', listenerFunc: (data: CaptureResul
 | **`eventName`**    | <code>'captureVideoFinished'</code>                                        |
 | **`listenerFunc`** | <code>(data: <a href="#captureresult">CaptureResult</a>) =&gt; void</code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 --------------------
 
@@ -328,7 +328,7 @@ addListener(eventName: 'captureVideoFinished', listenerFunc: (data: CaptureResul
 ### addListener('capturePhotoFinished', ...)
 
 ```typescript
-addListener(eventName: 'capturePhotoFinished', listenerFunc: (data: CaptureResult) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'capturePhotoFinished', listenerFunc: (data: CaptureResult) => void) => Promise<PluginListenerHandle>
 ```
 
 | Param              | Type                                                                       |
@@ -336,7 +336,7 @@ addListener(eventName: 'capturePhotoFinished', listenerFunc: (data: CaptureResul
 | **`eventName`**    | <code>'capturePhotoFinished'</code>                                        |
 | **`listenerFunc`** | <code>(data: <a href="#captureresult">CaptureResult</a>) =&gt; void</code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 --------------------
 
@@ -344,7 +344,7 @@ addListener(eventName: 'capturePhotoFinished', listenerFunc: (data: CaptureResul
 ### addListener('accelerometerOrientation', ...)
 
 ```typescript
-addListener(eventName: 'accelerometerOrientation', listenerFunc: (data: { orientation: CustomOrientation; }) => void) => Promise<PluginListenerHandle> & PluginListenerHandle
+addListener(eventName: 'accelerometerOrientation', listenerFunc: (data: { orientation: CustomOrientation; }) => void) => Promise<PluginListenerHandle>
 ```
 
 | Param              | Type                                                                                                 |
@@ -352,7 +352,7 @@ addListener(eventName: 'accelerometerOrientation', listenerFunc: (data: { orient
 | **`eventName`**    | <code>'accelerometerOrientation'</code>                                                              |
 | **`listenerFunc`** | <code>(data: { orientation: <a href="#customorientation">CustomOrientation</a>; }) =&gt; void</code> |
 
-**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt; & <a href="#pluginlistenerhandle">PluginListenerHandle</a></code>
+**Returns:** <code>Promise&lt;<a href="#pluginlistenerhandle">PluginListenerHandle</a>&gt;</code>
 
 --------------------
 

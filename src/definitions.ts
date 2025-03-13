@@ -86,22 +86,22 @@ export interface PreviewCameraPlugin {
   addListener(
     eventName: 'captureSuccessResult',
     listenerFunc: (data: CaptureSuccessResult) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
   addListener(
     eventName: 'captureErrorResult',
     listenerFunc: (data: CaptureErrorResult) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
   addListener(
     eventName: 'captureVideoFinished',
     listenerFunc: (data: CaptureResult) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
   addListener(
     eventName: 'capturePhotoFinished',
     listenerFunc: (data: CaptureResult) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
   addListener(
     eventName: 'accelerometerOrientation',
     listenerFunc: (data: { orientation: CustomOrientation }) => void,
-  ): Promise<PluginListenerHandle> & PluginListenerHandle;
+  ): Promise<PluginListenerHandle>;
   removeAllListeners(): Promise<void>;
 }
