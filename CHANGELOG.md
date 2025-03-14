@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.19] - 2025-03-14
+
+### Changed
+
+- Migrate plugin to Capacitor v7
+
 ## 0.0.18 - 2023-07-23
 
 ### Fixed
