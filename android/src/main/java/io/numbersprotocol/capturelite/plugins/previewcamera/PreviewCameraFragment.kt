@@ -23,7 +23,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.window.WindowManager
+import androidx.window.layout.WindowMetricsCalculator
 import com.getcapacitor.JSObject
 import com.getcapacitor.PluginCall
 import io.numbersprotocol.capturelite.plugins.previewcamera.databinding.FragmentPreviewCameraBinding
@@ -72,7 +72,7 @@ class PreviewCameraFragment : Fragment() {
 
     private var camera: Camera? = null
     private var cameraProvider: ProcessCameraProvider? = null
-    private lateinit var windowManager: WindowManager
+    private lateinit var windowMetricsCalculator: WindowMetricsCalculator
 
     private var currentDisplayOrientation = 0;
 
@@ -182,8 +182,8 @@ class PreviewCameraFragment : Fragment() {
         // Every time the orientation of device changes, update rotation for use cases
 //        displayManager.registerDisplayListener(displayListener, null)
 
-        //Initialize WindowManager to retrieve display metrics
-        windowManager = WindowManager(view.context)
+        //Initialize WindowMetricsCalculator to retrieve display metrics
+        windowMetricsCalculator = WindowMetricsCalculator.getOrCreate()
 
         // Determine the output directory
 
@@ -473,7 +473,7 @@ class PreviewCameraFragment : Fragment() {
 
     fun focus(x: Float, y: Float) {
         // Get screen metrics used to setup camera for full screen resolution
-        val metrics = windowManager.getCurrentWindowMetrics().bounds
+        val metrics = windowMetricsCalculator.computeCurrentWindowMetrics(requireActivity()).bounds
         val factory: MeteringPointFactory = SurfaceOrientedMeteringPointFactory(
             metrics.width().toFloat(), metrics.height().toFloat()
         )
@@ -497,7 +497,7 @@ class PreviewCameraFragment : Fragment() {
     fun bindCameraUseCases(customScreenOrientation: Int = Surface.ROTATION_0) {
 
         // Get screen metrics used to setup camera for full screen resolution
-        val metrics = windowManager.getCurrentWindowMetrics().bounds
+        val metrics = windowMetricsCalculator.computeCurrentWindowMetrics(requireActivity()).bounds
 
         Log.d(TAG, "Screen metrics: ${metrics.width()} x ${metrics.height()}")
 

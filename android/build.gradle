@@ -92,7 +92,7 @@ dependencies {
     implementation "androidx.camera:camera-view:$camerax_version"
 
     //WindowManager
-    implementation 'androidx.window:window:1.0.0-alpha09'
+    implementation 'androidx.window:window:1.4.0'
 
     // Unit Testing
     testImplementation "junit:junit:$junitVersion"
