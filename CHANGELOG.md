@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.0.20] - 2025-09-01
+
+### Changed
+
+- **BREAKING**: Migrated from deprecated `androidx.window.WindowManager` to `androidx.window.layout.WindowMetricsCalculator`
+- Updated androidx.window dependency from `1.0.0-alpha09` to `1.4.0` to resolve Google Play Store deprecation warning
+- Replaced `windowManager.getCurrentWindowMetrics()` with `windowMetricsCalculator.computeCurrentWindowMetrics(requireActivity())`
+
+### Fixed
+
+- Fixed Google Play Console warning: "Your app uses an outdated SDK version of androidx.window:window"
+- Resolved compatibility issues with Android API levels by using stable androidx.window APIs
+
 ## [0.0.19] - 2025-03-14
 
 ### Changed
