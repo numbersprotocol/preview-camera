@@ -15,6 +15,8 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.*
 import androidx.camera.core.*
+import androidx.camera.core.resolutionselector.AspectRatioStrategy
+import androidx.camera.core.resolutionselector.ResolutionSelector
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.video.*
 import androidx.camera.video.Recorder
@@ -22,7 +24,6 @@ import androidx.camera.video.VideoCapture
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.window.layout.WindowMetricsCalculator
 import com.getcapacitor.JSObject
 import com.getcapacitor.PluginCall
@@ -63,7 +64,6 @@ class PreviewCameraFragment : Fragment() {
     var recording: Recording? = null
 
     private lateinit var outputDirectory: File
-    private lateinit var broadcastManager: LocalBroadcastManager
 
     private var displayId: Int = -1
     private var lensFacing: Int = CameraSelector.LENS_FACING_BACK
@@ -173,16 +173,7 @@ class PreviewCameraFragment : Fragment() {
         // Initialize our background executor
         cameraExecutor = Executors.newSingleThreadExecutor()
 
-        broadcastManager = LocalBroadcastManager.getInstance(view.context)
-
-        // Set up the intent filter that will receive events from our main activity
-        // val filter = IntentFilter().apply { addAction(KEY_EVENT_ACTION) }
-        // broadcastManager.registerReceiver(volumeDownReceiver, filter)
-
-        // Every time the orientation of device changes, update rotation for use cases
-//        displayManager.registerDisplayListener(displayListener, null)
-
-        //Initialize WindowMetricsCalculator to retrieve display metrics
+        // Initialize WindowMetricsCalculator to retrieve display metrics
         windowMetricsCalculator = WindowMetricsCalculator.getOrCreate()
 
         // Determine the output directory
@@ -521,19 +512,27 @@ class PreviewCameraFragment : Fragment() {
         // CameraSelector
         val cameraSelector = CameraSelector.Builder().requireLensFacing(lensFacing).build()
 
-        // var aspectRatio = aspectRatio(screenWidth, screenHeight)
-        if (this.captureQuality == "low") {
-            screenAspectRatio = aspectRatio(1080, 1920)
-//            if (rotation % 2 == 0) {
-//                screenAspectRatio = aspectRatio(1920, 1080)
-//            }
+        // Build ResolutionSelector based on aspect ratio
+        val aspectRatioStrategy = if (screenAspectRatio == AspectRatio.RATIO_4_3) {
+            AspectRatioStrategy.RATIO_4_3_FALLBACK_AUTO_STRATEGY
+        } else {
+            AspectRatioStrategy.RATIO_16_9_FALLBACK_AUTO_STRATEGY
         }
+
+        // Use lower quality aspect ratio strategy if needed
+        val resolutionSelector = if (this.captureQuality == "low") {
+            ResolutionSelector.Builder()
+                .setAspectRatioStrategy(AspectRatioStrategy.RATIO_16_9_FALLBACK_AUTO_STRATEGY)
+                .build()
+        } else {
+            ResolutionSelector.Builder()
+                .setAspectRatioStrategy(aspectRatioStrategy)
+                .build()
+        }
+
         // Preview
         preview = Preview.Builder()
-            // We request aspect ratio but no resolution
-            .setTargetAspectRatio(screenAspectRatio)
-//            .setTargetAspectRatio(aspectRatio)
-            // Set initial target rotation
+            .setResolutionSelector(resolutionSelector)
             .setTargetRotation(Surface.ROTATION_0)
             .build()
             .also { it.setSurfaceProvider(fragmentCameraBinding.viewFinder.surfaceProvider) }
@@ -548,14 +547,8 @@ class PreviewCameraFragment : Fragment() {
         }
         // ImageCapture
         imageCapture = ImageCapture.Builder()
-            // .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
-            // We request aspect ratio but no resolution to match preview config, but letting
-            // CameraX optimize for whatever specific resolution best fits our use cases
-            .setTargetAspectRatio(screenAspectRatio)
-            // Set initial target rotation, we will have to call this again if rotation changes
-            // during the lifecycle of this use case
+            .setResolutionSelector(resolutionSelector)
             .setTargetRotation(Surface.ROTATION_0)
-            // .setCaptureMode(captureMode)
             .setJpegQuality(imageQuality)
             .setFlashMode(flashMode)
             .build()
@@ -580,30 +573,6 @@ class PreviewCameraFragment : Fragment() {
             camera = cameraProvider.bindToLifecycle(
                 viewLifecycleOwner, cameraSelector, preview, imageCapture, videoCapture
             )
-
-            val supportedQualities = QualitySelector.getSupportedQualities(camera!!.cameraInfo)
-            for (quality in supportedQualities) {
-                when (quality) {
-                    Quality.UHD -> {
-                        Log.e(TAG, "Supported quality: Ultra High Definition (UHD) - 2160p")
-                    }
-
-                    Quality.FHD -> {
-                        //Add "Full High Definition (FHD) - 1080p" to the list
-                        Log.e(TAG, "Supported quality: Full High Definition (FHD) - 1080p")
-                    }
-
-                    Quality.HD -> {
-                        //Add "High Definition (HD) - 720p" to the list
-                        Log.e(TAG, "Supported quality: High Definition (HD) - 720p")
-                    }
-
-                    Quality.SD -> {
-                        //Add "Standard Definition (SD) - 480p" to the list
-                        Log.e(TAG, "Supported quality: Standard Definition (SD) - 480p")
-                    }
-                }
-            }
 
 //            if (flashMode == ImageCapture.FLASH_MODE_ON)
 //                camera?.cameraControl?.enableTorch(true)
@@ -779,17 +748,9 @@ class PreviewCameraFragment : Fragment() {
 
 
     override fun onDestroy() {
-
-        // activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-
         _fragmentCameraBinding = null
         super.onDestroy()
-        // Shut down our background executor
         cameraExecutor.shutdown()
-
-        // Unregister the broadcast receivers and listeners
-        // broadcastManager.unregisterReceiver(volumeDownReceiver)
-        // displayManager.unregisterDisplayListener(displayListener)
     }
 
     override fun onDestroyView() {
