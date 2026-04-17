@@ -129,10 +129,10 @@ flipCamera() => Promise<void>
 ### getFlashModes()
 
 ```typescript
-getFlashModes() => Promise<any>
+getFlashModes() => Promise<{ result: string[]; }>
 ```
 
-**Returns:** <code>Promise&lt;any&gt;</code>
+**Returns:** <code>Promise&lt;{ result: string[]; }&gt;</code>
 
 --------------------
 

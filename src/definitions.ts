@@ -70,7 +70,7 @@ export interface PreviewCameraPlugin {
   startRecord(): Promise<void>;
   stopRecord(): Promise<void>;
   flipCamera(): Promise<void>;
-  getFlashModes(): Promise<any>;
+  getFlashModes(): Promise<{ result: string[] }>;
   setFlashMode(): Promise<void>;
   isTorchOn(): Promise<{ result: boolean }>;
   enableTorch(options: { enable: boolean }): Promise<void>;
