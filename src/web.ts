@@ -28,7 +28,7 @@ export class PreviewCameraWeb extends WebPlugin implements PreviewCameraPlugin {
   flipCamera(): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  getFlashModes(): Promise<any> {
+  getFlashModes(): Promise<{ result: string[] }> {
     throw new Error('Method not implemented.');
   }
   setFlashMode(): Promise<void> {
@@ -37,14 +37,14 @@ export class PreviewCameraWeb extends WebPlugin implements PreviewCameraPlugin {
   isTorchOn(): Promise<{ result: boolean }> {
     throw new Error('Method not implemented.');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   enableTorch(_: { enable: boolean }): Promise<void> {
     throw new Error('Method not implemented.');
   }
   isTorchAvailable(): Promise<{ result: boolean }> {
     throw new Error('Method not implemented.');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   focus(_: { x: number; y: number }): Promise<void> {
     throw new Error('Method not implemented.');
   }
@@ -55,11 +55,11 @@ export class PreviewCameraWeb extends WebPlugin implements PreviewCameraPlugin {
   maxAvailableZoom(): Promise<{ result: number }> {
     throw new Error('Method not implemented.');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   zoom(_: { factor: number }): Promise<void> {
     throw new Error('Method not implemented.');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   setQuality(_: { quality: 'low' | 'hq' }): Promise<void> {
     throw new Error('Method not implemented.');
   }
