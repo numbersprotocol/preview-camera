@@ -1,8 +1,9 @@
 import Foundation
 import UIKit
+import WebKit
 import Capacitor
 import AVFoundation
-import MobileCoreServices
+import UniformTypeIdentifiers
 
 typealias CapacitorNotifyListeners = (_ eventName: String, _ data: [String : Any?]?) -> Void
 
@@ -14,7 +15,7 @@ enum CaptureQuality {
     
     let notifyListeners: CapacitorNotifyListeners
     
-    var webView: UIView
+    var webView: WKWebView
     var parentView: UIView
     var settings: CameraSettings
     // Camera Preview state
@@ -43,7 +44,7 @@ enum CaptureQuality {
     
     var captureQuality = CaptureQuality.hq
 
-    init(webView: UIView, parentView: UIView, settings: CameraSettings, notifyListeners:  @escaping CapacitorNotifyListeners) {
+    init(webView: WKWebView, parentView: UIView, settings: CameraSettings, notifyListeners:  @escaping CapacitorNotifyListeners) {
         self.webView = webView
         self.parentView = parentView
         self.settings = settings
@@ -416,16 +417,17 @@ enum CaptureQuality {
     }
     
     public func saveFileToUserDevice(_ filePath: String) {
-        guard let fileExtension = URL(fileURLWithPath: filePath).pathExtension as CFString?,
-              let fileType = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, fileExtension, nil)?.takeRetainedValue() else {
+        let fileExtension = URL(fileURLWithPath: filePath).pathExtension
+        guard !fileExtension.isEmpty,
+              let fileType = UTType(filenameExtension: fileExtension) else {
             print("Unable to determine file type.")
             return
         }
         // Remove `file://` prefix if any
         let filePathClean = filePath.replacingOccurrences(of: "file://", with: "")
-        if UTTypeConformsTo(fileType, kUTTypeImage) {
+        if fileType.conforms(to: .image) {
             saveImageToPhotoAlbum(filePathClean)
-        } else if UTTypeConformsTo(fileType, kUTTypeMovie) {
+        } else if fileType.conforms(to: .movie) {
             saveVideoToPhotoAlbum(videoPath: filePathClean)
         } else {
             print("File type is neither image nor video.")
