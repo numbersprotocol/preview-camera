@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.0.23] - 2026-05-05
+
+### Added
+
+- Add Swift Package Manager support for Capacitor 8 projects.
+
 ## [0.0.20] - 2025-09-01
 
 ### Changed

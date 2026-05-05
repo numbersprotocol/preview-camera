@@ -9,7 +9,31 @@ import CoreMotion
  * here: https://capacitorjs.com/docs/plugins/ios
  */
 @objc(PreviewCameraPlugin)
-public class PreviewCameraPlugin: CAPPlugin {
+public class PreviewCameraPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "PreviewCameraPlugin"
+    public let jsName = "PreviewCamera"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "echo", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "startPreview", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "stopPreview", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "takePhoto", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "startRecord", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "stopRecord", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "flipCamera", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "getFlashModes", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setFlashModes", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isTorchOn", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "enableTorch", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "isTorchAvailable", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "focus", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "minAvailableZoom", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "maxAvailableZoom", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "zoom", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "setQuality", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "saveFileToUserDevice", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "checkPermissions", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "requestPermissions", returnType: CAPPluginReturnPromise)
+    ]
 
     private var call: CAPPluginCall?
     private var previewCamera: PreviewCamera?
